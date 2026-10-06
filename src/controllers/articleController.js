@@ -1,12 +1,8 @@
-const express = require('express');
 const Article = require('../models/articleModel');
 const articleValidation = require('../validation/articleValidation');
-const requireAuth = require('../middleware/requireAuth');
-
-const router = express.Router();
 
 // GET all articles
-router.get('/', requireAuth, async (req, res) => {
+const getArticles = async (req, res) => {
   try {
     const articles = await Article.find();
     res.json(articles);
@@ -15,10 +11,10 @@ router.get('/', requireAuth, async (req, res) => {
       error: 'Server error'
     });
   }
-});
+};
 
 // GET one article
-router.get('/:id', requireAuth, async (req, res) => {
+const getArticle = async (req, res) => {
   try {
     const article = await Article.findById(req.params.id);
 
@@ -34,10 +30,10 @@ router.get('/:id', requireAuth, async (req, res) => {
       error: 'Server error'
     });
   }
-});
+};
 
 // CREATE an article
-router.post('/', requireAuth, async (req, res) => {
+const createArticle = async (req, res) => {
   try {
     const { error } = articleValidation.validate(req.body);
 
@@ -61,10 +57,10 @@ router.post('/', requireAuth, async (req, res) => {
       error: 'Server error'
     });
   }
-});
+};
 
 // UPDATE an article
-router.put('/:id', requireAuth, async (req, res) => {
+const updateArticle = async (req, res) => {
   try {
     const { error } = articleValidation.validate(req.body);
 
@@ -101,10 +97,10 @@ router.put('/:id', requireAuth, async (req, res) => {
       error: 'Server error'
     });
   }
-});
+};
 
 // DELETE an article
-router.delete('/:id', requireAuth, async (req, res) => {
+const deleteArticle = async (req, res) => {
   try {
     const article = await Article.findById(req.params.id);
 
@@ -130,6 +126,12 @@ router.delete('/:id', requireAuth, async (req, res) => {
       error: 'Server error'
     });
   }
-});
+};
 
-module.exports = router;
+module.exports = {
+  getArticles,
+  getArticle,
+  createArticle,
+  updateArticle,
+  deleteArticle
+};

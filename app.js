@@ -1,12 +1,15 @@
 const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
-const authRoutes = require('./routes/authRoutes');
-const articleRoutes = require('./routes/articleRoutes');
+const authRoutes = require('./src/routes/authRoutes');
+const articleRoutes = require('./src/routes/articleRoutes');
 
 require('dotenv').config();
 
 app.use(express.json());
+app.get('/', (req, res) => {
+  res.send('Welcome to My Blog API');
+});
 
 app.use('/articles', articleRoutes);
 app.use('/auth', authRoutes);
